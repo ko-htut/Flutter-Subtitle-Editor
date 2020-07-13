@@ -20,9 +20,9 @@ class _HomePageState extends State<HomePage> {
   ChewieController chewieController;
   // List<Subtitle> sub;
   final String link =
-      "https://eboxmovie.sgp1.digitaloceanspaces.com/song/(303)%20%E7%B9%81%E6%98%9F%E5%9B%9B%E6%9C%88%20(Starry%20April)%20-%20%E5%85%94%E5%AD%90%E7%89%99Olivia%20(MV)%20_%20Vietsub%20-%20YouTube.MP4";
+      "https://eboxmovie.sgp1.digitaloceanspaces.com/How%20Not%20to%20Summon%20a%20Demon%20Lord%20Ending%20Full%20_%20Saiaku%20na%20Hi%20demo%20Anata%20ga%20Suki.%20-%20%20Yu%20Serizawa%20Lyrics_BWiuBMyFQLw_360p.mp4";
   final String subtitleUrl =
-      "https://eboxmovie.sgp1.digitaloceanspaces.com/song.srt";
+      "https://eboxmovie.sgp1.digitaloceanspaces.com/mmmmtest.srt";
 
   VideoPlayerController getVideoPlayerController() {
     if (videoPlayerController == null) {
