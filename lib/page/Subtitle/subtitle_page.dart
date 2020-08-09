@@ -29,44 +29,82 @@ class _SubtitlePageState extends State<SubtitlePage> {
   @override
   Widget build(BuildContext context) {
     Directory dir = Directory('/storage/emulated/0/');
-    String assPath = dir.toString();
-    print(assPath);
+    String datapath = dir.toString();
+    print(datapath);
     List<FileSystemEntity> _files;
     List<FileSystemEntity> _ass = [];
+    List<FileSystemEntity> _srt = [];
     _files = dir.listSync(recursive: true, followLinks: false);
     for (FileSystemEntity entity in _files) {
       String path = entity.path;
       if (path.endsWith('.ass')) _ass.add(entity);
+      if (path.endsWith('.srt')) _srt.add(entity);
     }
     print(_ass);
     print(_ass.length);
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              color: Colors.grey,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "ASS",
-                  style: TextStyle(color: Colors.white),
-                ),
+
+    Widget _assdata() {
+      return Column(
+        children: [
+          Container(
+            width: double.infinity,
+            color: Colors.grey,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "ASS",
+                style: TextStyle(color: Colors.white),
               ),
             ),
-            Padding(
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+                children: _ass
+                    .map((e) => SubFileItem(
+                          file: e,
+                        ))
+                    .toList()),
+          )
+        ],
+      );
+    }
+
+    Widget _srtdata() {
+      return Column(
+        children: [
+          Container(
+            width: double.infinity,
+            color: Colors.grey,
+            child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                  children: _ass
-                      .map((e) => SubFileItem(
-                            file: e,
-                          ))
-                      .toList()),
-            )
-          ],
-        ),
-      ),
+              child: Text(
+                "SRT",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+                children: _srt
+                    .map((e) => SubFileItem(
+                          file: e,
+                        ))
+                    .toList()),
+          )
+        ],
+      );
+    }
+
+    return Scaffold(
+      body: SingleChildScrollView(
+          child: Column(
+        children: [
+          _assdata(),
+          _srtdata(),
+        ],
+      )),
     );
   }
 }

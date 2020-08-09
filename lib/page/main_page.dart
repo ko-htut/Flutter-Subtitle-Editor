@@ -41,50 +41,78 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: Stack(
-        children: <Widget>[
-          NestedScrollView(
-            controller: _scrollViewController,
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                new SliverAppBar(
-                  elevation: 0,
-                  title: Text("Subtitle Editor"),
-                  pinned: true,
-                  floating: true,
-                  // forceElevated: innerBoxIsScrolled,
-                  bottom: new TabBar(
-                    // isScrollable: true,
-                    // indicatorSize: TabBarIndicatorSize.tab,
-                    tabs: <Tab>[
-                      Tab(
-                        text: "History",
-                      ),
-                      Tab(
-                        text: 'Subtitle',
-                      ),
-                      Tab(
-                        text: 'Menu',
-                      ),
-                    ],
-                    controller: _tabController,
-                  ),
-                ),
-              ];
-            },
-            body: TabBarView(
-              controller: _tabController,
-              children: [
-                HistoryPage(),
-                SubtitlePage(),
-                MenuPage(),
-              ],
+      appBar: AppBar(
+        elevation: 0,
+        title: Text("Subtitle Editor"),
+        bottom: new TabBar(
+          // isScrollable: true,
+          // indicatorSize: TabBarIndicatorSize.tab,
+          tabs: <Tab>[
+            Tab(
+              text: "History",
             ),
-          ),
+            Tab(
+              text: 'Subtitle',
+            ),
+            Tab(
+              text: 'Menu',
+            ),
+          ],
+          controller: _tabController,
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          HistoryPage(),
+          SubtitlePage(),
+          MenuPage(),
         ],
       ),
-    ));
+
+      // child: Stack(
+      //   children: <Widget>[
+      //     NestedScrollView(
+      //       controller: _scrollViewController,
+      //       headerSliverBuilder:
+      //           (BuildContext context, bool innerBoxIsScrolled) {
+      //         return <Widget>[
+      //           new SliverAppBar(
+      //             elevation: 0,
+      //             title: Text("Subtitle Editor"),
+      //             pinned: true,
+      //             // floating: true,
+      //             // forceElevated: innerBoxIsScrolled,
+      //             bottom: new TabBar(
+      //               // isScrollable: true,
+      //               // indicatorSize: TabBarIndicatorSize.tab,
+      //               tabs: <Tab>[
+      //                 Tab(
+      //                   text: "History",
+      //                 ),
+      //                 Tab(
+      //                   text: 'Subtitle',
+      //                 ),
+      //                 Tab(
+      //                   text: 'Menu',
+      //                 ),
+      //               ],
+      //               controller: _tabController,
+      //             ),
+      //           ),
+      //         ];
+      //       },
+      //       body: TabBarView(
+      //         controller: _tabController,
+      //         children: [
+      //           HistoryPage(),
+      //           SubtitlePage(),
+      //           MenuPage(),
+      //         ],
+      //       ),
+      //     ),
+      //   ],
+      // ),
+    );
   }
 }

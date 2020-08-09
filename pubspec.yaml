@@ -29,6 +29,7 @@ dependencies:
   ant_icons: ^1.0.0
   path_provider: ^1.6.11
   permission_handler: ^3.2.0
+  marquee_widget: ^0.8.0
 
 dev_dependencies:
   flutter_test:

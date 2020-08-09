@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:ant_icons/ant_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_subtitle_editor/utils/file_extentions.dart';
+import 'package:marquee_widget/marquee_widget.dart';
 
 class SubFileItem extends StatelessWidget {
   final FileSystemEntity file;
@@ -21,7 +22,12 @@ class SubFileItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(myfile.name),
+                Marquee(
+                  child: Text(
+                    myfile.name,
+                    maxLines: 1,
+                  ),
+                ),
                 Text(myfile.lastModifiedSync().toString()),
               ],
             ),

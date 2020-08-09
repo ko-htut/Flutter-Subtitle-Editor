@@ -9,7 +9,6 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,10 +18,6 @@ class _HistoryPageState extends State<HistoryPage> {
           child: Column(
             children: [
               HistroyWidget(),
-              HistroyWidget(),
-              HistroyWidget(),
-              HistroyWidget(),
-              HistroyWidget()
             ],
           ),
         ),
