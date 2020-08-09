@@ -1,14 +1,34 @@
+import 'dart:io';
 import 'package:ant_icons/ant_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_subtitle_editor/utils/file_extentions.dart';
 
 class SubFileItem extends StatelessWidget {
-  const SubFileItem({Key key}) : super(key: key);
+  final FileSystemEntity file;
+  const SubFileItem({Key key, @required this.file}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title:  Text("Romeo x Juliet 01 [umai][ED5CA47B].ass"),
-      trailing: Icon(AntIcons.file_text,size: 20,),
+    File myfile = File(file.path);
+    return Card(
+      elevation: 0.0,
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(myfile.name),
+                Text(myfile.lastModifiedSync().toString()),
+              ],
+            ),
+            Icon(AntIcons.file_text),
+          ],
+        ),
+      ),
     );
   }
 }

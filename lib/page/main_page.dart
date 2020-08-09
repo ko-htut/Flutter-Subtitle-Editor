@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_subtitle_editor/page/History/history_page.dart';
 import 'package:flutter_subtitle_editor/page/Subtitle/subtitle_page.dart';
 import 'package:flutter_subtitle_editor/page/menu/menu_page.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class MainPage extends StatefulWidget {
   MainPage({Key key}) : super(key: key);
@@ -17,6 +18,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    getPermission();
     _scrollViewController = new ScrollController();
     _tabController = new TabController(initialIndex: 0, vsync: this, length: 3);
   }
@@ -26,6 +28,14 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     _scrollViewController = new ScrollController();
     _tabController.dispose();
     super.dispose();
+  }
+
+  void getPermission() async {
+    PermissionStatus permission = await PermissionHandler()
+        .checkPermissionStatus(PermissionGroup.storage);
+    if (permission != PermissionStatus.granted) {
+      await PermissionHandler().requestPermissions([PermissionGroup.storage]);
+    } else {}
   }
 
   @override
