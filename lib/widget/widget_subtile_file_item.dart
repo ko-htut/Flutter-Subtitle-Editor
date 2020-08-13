@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:ant_icons/ant_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_subtitle_editor/page/Editor/editor_page.dart';
 import 'package:flutter_subtitle_editor/utils/file_extentions.dart';
 import 'package:marquee_widget/marquee_widget.dart';
 
@@ -19,6 +20,9 @@ class _SubFileItemState extends State<SubFileItem> {
     return InkWell(
       onDoubleTap: () {
         dialog(context, fileSystemEntity: widget.file);
+      },
+      onTap: () {
+        _navigateToNextScreen(context);
       },
       child: Card(
         elevation: 0.0,
@@ -46,6 +50,11 @@ class _SubFileItemState extends State<SubFileItem> {
         ),
       ),
     );
+  }
+
+  void _navigateToNextScreen(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => EditorPage()));
   }
 
   void dialog(BuildContext context, {FileSystemEntity fileSystemEntity}) {

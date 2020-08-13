@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_subtitle_editor/page/Editor/editor_page.dart';
 import 'package:flutter_subtitle_editor/widget/widget_subtile_file_item.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -63,7 +64,6 @@ class _SubtitlePageState extends State<SubtitlePage> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return new Text('Data is loading...');
                 } else {
-
                   List<FileSystemEntity> srt = snapshot.data;
                   // print("ass : ${srt.length}");
                   // return Text("data");
@@ -105,8 +105,8 @@ class _SubtitlePageState extends State<SubtitlePage> {
                   return Column(
                       children: srt
                           .map((e) => SubFileItem(
-                                file: e,
-                              ))
+                            file: e,
+                          ))
                           .toList());
                 }
               }),

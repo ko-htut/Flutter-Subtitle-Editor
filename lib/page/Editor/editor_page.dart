@@ -10,10 +10,31 @@ class EditorPage extends StatefulWidget {
 class _EditorPageState extends State<EditorPage> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Editor"),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            _videoview(),
+            _subtitlelist(),
+          ],
+        ),
       ),
     );
+  }
+
+  Widget _videoview() {
+    return AspectRatio(
+      aspectRatio: 16 / 9,
+      child: Container(
+        color: Colors.grey,
+      ),
+    );
+  }
+
+  Widget _subtitlelist() {
+    return Text("data");
   }
 }
