@@ -17,6 +17,7 @@ class _SubtitlePageState extends State<SubtitlePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    getPermission();
   }
 
   void getPermission() async {
@@ -44,70 +45,101 @@ class _SubtitlePageState extends State<SubtitlePage> {
     // print(_ass);
     // print(_ass.length);
 
-    Widget _assdata() {
-      return Column(
-        children: [
-          Container(
-            width: double.infinity,
-            color: Colors.grey,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "ASS",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
-          FutureBuilder(
-              future: assfilelist(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return new Text('Data is loading...');
-                } else {
-                  List<FileSystemEntity> srt = snapshot.data;
-                  // print("ass : ${srt.length}");
-                  // return Text("data");
-                  return Column(
-                      children: srt
-                          .map((e) => SubFileItem(
-                                file: e,
-                              ))
-                          .toList());
-                }
-              }),
-        ],
-      );
-    }
+    // Widget _assdata() {
+    //   return Column(
+    //     children: [
+    //       Container(
+    //         width: double.infinity,
+    //         color: Colors.grey,
+    //         child: Padding(
+    //           padding: const EdgeInsets.all(8.0),
+    //           child: Text(
+    //             "ASS",
+    //             style: TextStyle(color: Colors.white),
+    //           ),
+    //         ),
+    //       ),
+    //       FutureBuilder(
+    //           future: assfilelist(),
+    //           builder: (BuildContext context, AsyncSnapshot snapshot) {
+    //             if (snapshot.connectionState == ConnectionState.waiting) {
+    //               return new Text('Data is loading...');
+    //             } else {
+    //               List<FileSystemEntity> srt = snapshot.data;
+    //               // print("ass : ${srt.length}");
+    //               // return Text("data");
+    //               return Column(
+    //                   children: srt
+    //                       .map((e) => SubFileItem(
+    //                             file: e,
+    //                           ))
+    //                       .toList());
+    //             }
+    //           }),
+    //     ],
+    //   );
+    // }
 
-    Widget _srtdata() {
+    Widget _filddata() {
       return Column(
         children: [
-          Container(
-            width: double.infinity,
-            color: Colors.grey,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "SRT",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ),
           FutureBuilder(
-              future: srtfilelist(),
+              future: filelist(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return new Text('Data is loading...');
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: new Text('Data is loading...'),
+                    ),
+                  );
                 } else {
-                  List<FileSystemEntity> srt = snapshot.data;
-                  // print("ass : ${srt.length}");
-                  // return Text("data");
+                  List<FileSystemEntity> file = snapshot.data;
+                  var srt = new List<FileSystemEntity>();
+                  var ass = new List<FileSystemEntity>();
+                  for (FileSystemEntity entity in file) {
+                    String path = entity.path;
+                    if (path.endsWith('.srt')) srt.add(entity);
+                    if (path.endsWith('.ass')) ass.add(entity);
+                  }
                   return Column(
-                      children: srt
-                          .map((e) => SubFileItem(
-                            file: e,
-                          ))
-                          .toList());
+                    children: <Widget>[
+                      Container(
+                        width: double.infinity,
+                        color: Colors.grey,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "ASS",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      Column(
+                          children: ass
+                              .map((e) => SubFileItem(
+                                    file: e,
+                                  ))
+                              .toList()),
+                      Container(
+                        width: double.infinity,
+                        color: Colors.grey,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "SRT",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      Column(
+                          children: srt
+                              .map((e) => SubFileItem(
+                                    file: e,
+                                  ))
+                              .toList()),
+                    ],
+                  );
                 }
               }),
         ],
@@ -116,42 +148,46 @@ class _SubtitlePageState extends State<SubtitlePage> {
 
     return Scaffold(
       body: SingleChildScrollView(
-          child: Column(
-        children: [
-          _assdata(),
-          _srtdata(),
-        ],
-      )),
+        child: _filddata(),
+      ),
     );
   }
 
-  Future<List<FileSystemEntity>> srtfilelist() async {
-    Directory dir = Directory('/storage/emulated/0/');
-    var filesList = new List<FileSystemEntity>();
-    var srt = new List<FileSystemEntity>();
-    // filesList = await FilesInDirectory().getFilesFromDir();
-    filesList = dir.listSync(recursive: true, followLinks: false);
-    for (FileSystemEntity entity in filesList) {
-      String path = entity.path;
-      if (path.endsWith('.srt')) srt.add(entity);
-    }
-    await new Future.delayed(new Duration(milliseconds: 500));
-    print(srt.length);
-    return srt;
-  }
+  // Future<List<FileSystemEntity>> srtfilelist() async {
+  //   Directory dir = Directory('/storage/emulated/0/');
+  //   var filesList = new List<FileSystemEntity>();
+  //   var srt = new List<FileSystemEntity>();
+  //   // filesList = await FilesInDirectory().getFilesFromDir();
+  //   filesList = dir.listSync(recursive: true, followLinks: false);
+  //   for (FileSystemEntity entity in filesList) {
+  //     String path = entity.path;
+  //     if (path.endsWith('.srt')) srt.add(entity);
+  //   }
+  //   await new Future.delayed(new Duration(milliseconds: 500));
+  //   print(srt.length);
+  //   return srt;
+  // }
 
-  Future<List<FileSystemEntity>> assfilelist() async {
+  // Future<List<FileSystemEntity>> assfilelist() async {
+  //   Directory dir = Directory('/storage/emulated/0/');
+  //   var filesList = new List<FileSystemEntity>();
+  //   var ass = new List<FileSystemEntity>();
+  //   // filesList = await FilesInDirectory().getFilesFromDir();
+  //   filesList = dir.listSync(recursive: true, followLinks: false);
+  //   for (FileSystemEntity entity in filesList) {
+  //     String path = entity.path;
+  //     if (path.endsWith('.ass')) ass.add(entity);
+  //   }
+  //   await new Future.delayed(new Duration(milliseconds: 500));
+  //   print(ass.length);
+  //   return ass;
+  // }
+
+  Future<List<FileSystemEntity>> filelist() async {
     Directory dir = Directory('/storage/emulated/0/');
     var filesList = new List<FileSystemEntity>();
-    var ass = new List<FileSystemEntity>();
-    // filesList = await FilesInDirectory().getFilesFromDir();
     filesList = dir.listSync(recursive: true, followLinks: false);
-    for (FileSystemEntity entity in filesList) {
-      String path = entity.path;
-      if (path.endsWith('.ass')) ass.add(entity);
-    }
     await new Future.delayed(new Duration(milliseconds: 500));
-    print(ass.length);
-    return ass;
+    return filesList;
   }
 }
