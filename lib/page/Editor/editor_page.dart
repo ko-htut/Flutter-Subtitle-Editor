@@ -116,11 +116,24 @@ class _EditorPageState extends State<EditorPage> {
   Widget _videoview() {
     return AspectRatio(
       aspectRatio: 16 / 9,
-      child: Container(
-        color: Colors.grey,
-        child: Chewie(
-          controller: _chewieController,
-        ),
+      child: Stack(
+        children: [
+          Container(
+            color: Colors.grey,
+            child: Chewie(
+              controller: _chewieController,
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                  (_chewieController.showControls == true) ? "subtitle" : "",
+                  style: Theme.of(context).textTheme.bodyText1),
+            ),
+          )
+        ],
       ),
     );
   }
