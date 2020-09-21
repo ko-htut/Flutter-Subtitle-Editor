@@ -1,5 +1,7 @@
 import 'package:ant_icons/ant_icons.dart';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 
 class EditorPage extends StatefulWidget {
   EditorPage({Key key}) : super(key: key);
@@ -9,6 +11,30 @@ class EditorPage extends StatefulWidget {
 }
 
 class _EditorPageState extends State<EditorPage> {
+  VideoPlayerController _videoPlayerController1;
+  ChewieController _chewieController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _videoPlayerController1 = VideoPlayerController.network(
+        'https://sfux-ext.sfux.info/hls/chapter/105/1588724110/1588724110.m3u8');
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayerController1,
+      aspectRatio: 16 / 9,
+      autoPlay: true,
+      looping: true,
+    );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _videoPlayerController1.dispose();
+    _chewieController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,6 +118,9 @@ class _EditorPageState extends State<EditorPage> {
       aspectRatio: 16 / 9,
       child: Container(
         color: Colors.grey,
+        child: Chewie(
+          controller: _chewieController,
+        ),
       ),
     );
   }

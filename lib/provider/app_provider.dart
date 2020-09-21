@@ -1,0 +1,6 @@
+import 'package:flutter/material.dart';
+
+class AppData extends ChangeNotifier {
+  // App State
+
+}
